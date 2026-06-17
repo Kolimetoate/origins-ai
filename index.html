@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>ORIGINS AI</title>
+</head>
+<body>
+<h1>ORIGINS AI</h1>
+
+<button id="googleBtn">Connexion Google</button>
+<button id="guestBtn">Mode Invité</button>
+
+<textarea id="msg"></textarea>
+<button id="send">Envoyer</button>
+
+<pre id="out"></pre>
+
+<script>
+let mode = 'guest';
+
+googleBtn.onclick = ()=>{
+  mode = 'google';
+  alert('OAuth Google à implémenter côté backend');
+};
+
+guestBtn.onclick = ()=> mode = 'guest';
+
+send.onclick = async ()=>{
+  const r = await fetch('http://localhost:3000/api/chat',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({
+      message: msg.value,
+      mode
+    })
+  });
+
+  const data = await r.json();
+  out.textContent += "\nIA: " + data.reply;
+};
+</script>
+</body>
+</html>
